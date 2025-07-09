@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -11,7 +12,7 @@
  * contributors, visit https://github.com/PHPOffice/PHPWord/contributors.
  *
  * @see         https://github.com/PHPOffice/PHPWord
- * @copyright   2010-2018 PHPWord contributors
+ *
  * @license     http://www.gnu.org/licenses/lgpl.txt LGPL version 3
  */
 
@@ -523,7 +524,7 @@ class Chart extends AbstractStyle
      * @param string $labelPosition
      * @return Chart
      */
-    public function setValueLabelPosition($labelPosition)
+    public function setValueLabelPosition(string $labelPosition)
     {
         $enum = ['nextTo', 'low', 'high'];
         $this->valueLabelPosition = $this->setEnumVal($labelPosition, $enum, $this->valueLabelPosition);

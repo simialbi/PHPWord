@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -31,7 +32,7 @@ class Section extends AbstractContainer
     /**
      * Section style.
      *
-     * @var ?\PhpOffice\PhpWord\Style\Section
+     * @var ?SectionStyle
      */
     private $style;
 
@@ -79,7 +80,7 @@ class Section extends AbstractContainer
      */
     public function setStyle(?array $style = null): void
     {
-        if (is_array($style)) {
+        if (null !== $style) {
             $this->style->setStyleByArray($style);
         }
     }
@@ -87,7 +88,7 @@ class Section extends AbstractContainer
     /**
      * Get section style.
      *
-     * @return ?\PhpOffice\PhpWord\Style\Section
+     * @return ?SectionStyle
      */
     public function getStyle(): ?SectionStyle
     {
@@ -97,12 +98,11 @@ class Section extends AbstractContainer
     /**
      * Add header.
      *
+     * @since 0.10.0
+     *
      * @param string $type
      *
      * @return Header
-     *
-     * @throws Exception
-     * @since 0.10.0
      */
     public function addHeader(string $type = Header::AUTO)
     {
@@ -112,12 +112,11 @@ class Section extends AbstractContainer
     /**
      * Add footer.
      *
+     * @since 0.10.0
+     *
      * @param string $type
      *
      * @return Footer
-     *
-     * @throws Exception
-     * @since 0.10.0
      */
     public function addFooter(string $type = Header::AUTO)
     {
@@ -137,8 +136,7 @@ class Section extends AbstractContainer
     /**
      * Get footer elements.
      *
-     * @retu
-     * rn Footer[]
+     * @return Footer[]
      */
     public function getFooters(): array
     {
@@ -190,24 +188,23 @@ class Section extends AbstractContainer
     /**
      * Add header/footer.
      *
+     * @since 0.10.0
+     *
      * @param string $type
      * @param bool $header
      *
      * @return Footer|Header
-     * @throws Exception
-     *
-     * @since 0.10.0
      */
     private function addHeaderFooter(string $type = Header::AUTO, bool $header = true)
     {
-        $containerClass = substr(static::class, 0, strrpos(static::class, '\\')) . '\\' .
+        $containerClass = substr(static::class, 0, strrpos(static::class, '\\') ?: 0) . '\\' .
             ($header ? 'Header' : 'Footer');
         $collectionArray = $header ? 'headers' : 'footers';
         $collection = &$this->$collectionArray;
 
         if (in_array($type, [Header::AUTO, Header::FIRST, Header::EVEN])) {
             $index = count($collection);
-            /** @var \PhpOffice\PhpWord\Element\Header|\PhpOffice\PhpWord\Element\Footer $container Type hint */
+            /** @var AbstractContainer $container Type hint */
             $container = new $containerClass($this->sectionId, ++$index, $type);
             $container->setPhpWord($this->phpWord);
 
